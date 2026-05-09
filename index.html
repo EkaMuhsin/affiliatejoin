@@ -489,16 +489,6 @@ COUNTDOWN
 }
 
 /* =========================
-VIDEO
-========================= */
-
-video{
-    width:100%;
-    border-radius:24px;
-    margin-top:20px;
-}
-
-/* =========================
 FLOAT WA
 ========================= */
 
@@ -531,6 +521,7 @@ FLOAT WA
 
 .wa-float:hover{
     transform:translateY(-5px);
+    transition: .3s;
 }
 
 /* =========================
@@ -560,6 +551,9 @@ MOBILE
 ========================= */
 
 @media(max-width:768px){
+    .cursor{
+        display:none;
+    }
 
     .hero h1{
         font-size:42px;
@@ -583,6 +577,163 @@ MOBILE
 
 }
 
+
+/* =========================
+LIVE VIEWER
+========================= */
+
+.live-viewer{
+
+    position: fixed;
+
+    top: 110px;
+    right: 25px;
+
+    background: rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    padding: 14px 18px;
+
+    border-radius: 18px;
+
+    z-index: 999;
+
+    font-size: 14px;
+}
+
+/* =========================
+STOCK SLOT
+========================= */
+
+.stock-box{
+
+    position: fixed;
+
+    top: 170px;
+    right: 25px;
+
+    background: rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    padding: 14px 18px;
+
+    border-radius: 18px;
+
+    z-index: 999;
+
+    font-size: 14px;
+
+}
+
+/* =========================
+JOIN POPUP
+========================= */
+
+.join-popup{
+
+    position: fixed;
+
+    left: 25px;
+    bottom: 110px;
+
+    background: rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(14px);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    padding: 16px 22px;
+
+    border-radius: 18px;
+
+    z-index: 9999;
+
+    opacity: 0;
+
+    transform: translateY(100px);
+
+    transition: .5s;
+}
+
+.join-popup.show{
+
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+/* =========================
+PROMO POPUP
+========================= */
+
+.promo-popup{
+
+    position: fixed;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,.9);
+
+    top: 0;
+    left: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 99999;
+}
+
+.promo-content{
+
+    width: 90%;
+    max-width: 500px;
+
+    background: #111827;
+
+    padding: 40px;
+
+    border-radius: 30px;
+
+    text-align: center;
+
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.promo-content h1{
+
+    color: #ff4444;
+
+    margin-bottom: 20px;
+}
+
+.promo-content button{
+
+    margin-top: 25px;
+
+    padding: 14px 28px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: #22c55e;
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
 </style>
 </head>
 
@@ -599,7 +750,7 @@ MOBILE
 </div>
 
 <!-- MUSIC -->
-<audio autoplay loop>
+<audio id="bgmusic" loop>
     <source src="music.mp3" type="audio/mp3">
 </audio>
 
@@ -611,7 +762,7 @@ MOBILE
     </div>
 
     <a href="https://wa.me/6285823486505?text=Halo%20kak,%20saya%20mau%20ikut%20affiliate%20dong☺️"
-        class="nav-btn">
+        class="nav-btn promoBtn">
         Join Sekarang
     </a>
 
@@ -637,7 +788,7 @@ MOBILE
         <div class="hero-btns">
 
             <a href="https://wa.me/6285823486505?text=Halo%20kak,%20saya%20mau%20ikut%20affiliate%20dong☺️"
-                class="btn">
+                class="btn promoBtn">
                 Gabung Sekarang!
             </a>
 
@@ -664,10 +815,10 @@ MOBILE
 
         <div class="old-price">Rp100.000</div>
 
-        <div class="new-price">Rp45.000</div>
+        <div class="new-price" id="price">Rp45.000</div>
 
         <a href="https://wa.me/6285823486505?text=Halo%20kak,%20saya%20mau%20ikut%20affiliate%20dong☺️"
-            class="btn">
+            class="btn promoBtn">
             Daftar via WhatsApp
         </a>
 
@@ -740,7 +891,7 @@ MOBILE
         <div class="testi">
 
             <a href="https://wa.me/6285823486505?text=Halo%20kak,%20saya%20mau%20ikut%20affiliate%20Srengat☺️"
-            class="btnwa">
+            class="btnwa promoBtn">
                 💬
             </a>
 
@@ -753,7 +904,7 @@ MOBILE
         <div class="testi">
 
             <a href="https://wa.me/6285823486505?text=Halo%20kak,%20saya%20mau%20ikut%20affiliate%20Tulungagung☺️"
-            class="btnwa">
+            class="btnwa promoBtn">
                 💬
             </a>
             <h3>📍 Tulungagung</h3>
@@ -794,8 +945,57 @@ MOBILE
 
 </div>
 
+<!-- =========================
+LIVE VIEWER
+========================= -->
+
+<div class="live-viewer">
+    👁 <span id="viewerCount">128</span> orang sedang melihat
+</div>
+
+<!-- =========================
+STOK SLOT
+========================= -->
+
+<div class="stock-box">
+
+    🔥 Sisa Slot:
+    <span id="slotCount">12</span>
+
+</div>
+
+<!-- =========================
+POPUP NOTIFIKASI JOIN
+========================= -->
+
+<div class="join-popup" id="joinPopup">
+    <span id="joinText"></span>
+</div>
+
+<!-- =========================
+POPUP PROMO HABIS
+========================= -->
+
+<div class="promo-popup" id="promoPopup">
+
+    <div class="promo-content">
+
+        <h1>⏰ PROMO BERAKHIR</h1>
+
+        <p>
+            Harga kembali normal menjadi Rp100.000
+        </p>
+
+        <button onclick="closePromo()">
+            Tutup
+        </button>
+
+    </div>
+
+</div>
+
 <!-- FLOAT WA -->
-<a href="https://wa.me/6285823486505?text=Halo%20kak,%20saya%20mau%20ikut%20affiliate%20dong☺️" class="wa-float">💬</a>
+<a href="https://wa.me/6285823486505?text=Halo%20kak,%20saya%20mau%20ikut%20affiliate%20dong☺️" class="wa-float promoBtn">💬</a>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
@@ -909,9 +1109,140 @@ function closeLightbox(){
     document.getElementById("lightbox").style.display = "none";
 }
 
-/* COUNTDOWN */
+/* =========================
+COUNTING PRICE ANIMATION
+========================= */
 
-let time = 300; // 5 menit
+function animatePrice(start,end,duration){
+
+    let range = end - start;
+
+    let current = start;
+
+    let increment = range / (duration / 10);
+
+    const price = document.getElementById("price");
+
+    let timer = setInterval(() => {
+
+        current += increment;
+
+        if(current >= end){
+
+            current = end;
+
+            clearInterval(timer);
+        }
+
+        price.innerHTML =
+        "Rp" + Math.floor(current).toLocaleString('id-ID');
+
+    },10);
+
+}
+
+/* =========================
+LIVE VIEWER RANDOM
+========================= */
+
+setInterval(() => {
+
+    let viewers =
+    Math.floor(Math.random() * 40) + 120;
+
+    document.getElementById("viewerCount")
+    .innerHTML = viewers;
+
+},3000);
+
+/* =========================
+SLOT BERKURANG
+========================= */
+
+let slot = 12;
+
+setInterval(() => {
+
+    if(slot > 3){
+
+        slot--;
+
+        document.getElementById("slotCount")
+        .innerHTML = slot;
+
+    }
+
+},25000);
+
+/* =========================
+NOTIFIKASI JOIN
+========================= */
+
+const names = [
+
+    "Andi",
+    "Rizky",
+    "Fajar",
+    "Dina",
+    "Alya",
+    "Nanda",
+    "Maylia",
+    "Gazi",
+    "Salsa",
+    "Putri",
+    "Haqi",
+    "Ahmad",
+    "Hamdani",
+    "Erika",
+    "Mahira",
+    "Hevi",
+    "Zaky",
+    "Afifan"
+
+];
+
+function showJoinPopup(){
+
+    const popup =
+    document.getElementById("joinPopup");
+
+    const text =
+    document.getElementById("joinText");
+
+    const randomName =
+    names[Math.floor(Math.random()*names.length)];
+
+    text.innerHTML =
+    `🔥 ${randomName} baru saja join affiliate`;
+
+    popup.classList.add("show");
+
+    setTimeout(() => {
+
+        popup.classList.remove("show");
+
+    },4000);
+
+}
+
+setInterval(showJoinPopup,8000);
+
+/* =========================
+PROMO HABIS POPUP
+========================= */
+
+function closePromo(){
+
+    document.getElementById("promoPopup")
+    .style.display = "none";
+
+}
+
+/* =========================
+COUNTDOWN UPGRADE
+========================= */
+
+let time = 300;
 
 const timer = setInterval(() => {
 
@@ -921,7 +1252,6 @@ const timer = setInterval(() => {
 
     let seconds = time % 60;
 
-    // format 2 digit
     hours = String(hours).padStart(2,'0');
     minutes = String(minutes).padStart(2,'0');
     seconds = String(seconds).padStart(2,'0');
@@ -929,25 +1259,57 @@ const timer = setInterval(() => {
     document.getElementById("timer").innerHTML =
     `${hours}:${minutes}:${seconds}`;
 
-    // warna merah saat hampir habis
     if(time <= 60){
-        document.getElementById("timer").style.color = "red";
+
+        document.getElementById("timer")
+        .style.color = "#ff4444";
+
     }
 
-    // stop saat habis
+    /* PROMO HABIS */
+
     if(time <= 0){
 
         clearInterval(timer);
 
-        document.getElementById("timer").innerHTML =
-        "PROMO BERAKHIR";
+        document.getElementById("timer")
+        .innerHTML = "PROMO BERAKHIR";
+
+        /* smooth counting price */
+        animatePrice(45000,100000,2000);
+
+        /* popup promo */
+        document.getElementById("promoPopup")
+        .style.display = "flex";
+
+        /* button disable */
+        const buttons = document.querySelectorAll(".promoBtn");
+        buttons.forEach(button => {
+        button.style.background = "gray";
+        button.style.pointerEvents = "none";
+
+        if(button.classList.contains("btn") ||
+        button.classList.contains("nav-btn")){
+        button.innerHTML = "PROMO BERAKHIR";
+        }
+        });
 
     }
 
+    if(time > 0){
     time--;
+    }
 
 },1000);
 
+//Musik
+const music = document.getElementById("bgmusic");
+
+document.body.addEventListener("click", () => {
+
+    music.play().catch(() => {});
+
+}, { once: true });
 
 </script>
 
